@@ -60,6 +60,15 @@ Run the scheduler to send the email every day at the time in `SEND_TIME`:
 python scheduler.py
 ```
 
+## Deploy on Railway
+
+1. Push this repo to GitHub.
+2. Open Railway and create a new project from this repository.
+3. Add the same environment variables from `.env` inside Railway's Variables panel.
+4. Keep `SEND_TIME` set to `07:30` or change it to your preferred time.
+5. Railway will use `railway.json` or `Procfile` to start the scheduler with `python scheduler.py`.
+6. Deploy the service and keep it running as a worker process.
+
 ## Notes
 
 - `TO_EMAIL` is the address that receives the email.
