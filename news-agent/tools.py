@@ -44,7 +44,7 @@ def fetch_latest_india_news() -> List[dict]:
 def summarize_article(article: dict) -> str:
     """Create a short 2-3 line summary for one article using OpenAI."""
     api_key = os.getenv("OPENAI_API_KEY")
-    model = os.getenv("OPENAI_MODEL", "gpt-5")
+    model = os.getenv("OPENAI_MODEL", "gpt-4o")
     if not api_key:
         raise ValueError("Missing OPENAI_API_KEY in .env")
 
