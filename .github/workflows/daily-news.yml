@@ -1,0 +1,37 @@
+name: Daily AI News Email
+
+on:
+  schedule:
+    # Runs every day at 07:30 UTC
+    - cron: '30 7 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  run-news-agent:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          cd news-agent
+          pip install -r requirements.txt
+      
+      - name: Run news agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: |
+          cd news-agent
+          python app.py

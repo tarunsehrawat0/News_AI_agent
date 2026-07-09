@@ -60,14 +60,21 @@ Run the scheduler to send the email every day at the time in `SEND_TIME`:
 python scheduler.py
 ```
 
-## Deploy on Railway
+## GitHub Actions (Recommended)
 
-1. Push this repo to GitHub.
-2. Open Railway and create a new project from this repository.
-3. Add the same environment variables from `.env` inside Railway's Variables panel.
-4. Keep `SEND_TIME` set to `07:30` or change it to your preferred time.
-5. Railway will use `railway.json` or `Procfile` to start the scheduler with `python scheduler.py`.
-6. Deploy the service and keep it running as a worker process.
+Use GitHub Actions to run the agent daily without keeping a local machine running:
+
+1. Push this repository to GitHub.
+2. Go to your repository **Settings** → **Secrets and variables** → **Actions**.
+3. Add the following repository secrets:
+   - `OPENAI_API_KEY`
+   - `OPENAI_MODEL` (e.g., `gpt-5`)
+   - `NEWSAPI_KEY`
+   - `GMAIL_USER`
+   - `GMAIL_APP_PASSWORD`
+   - `TO_EMAIL`
+4. The workflow is configured to run daily at 07:30 UTC. You can also trigger it manually from the **Actions** tab.
+5. To change the schedule time, edit `.github/workflows/daily-news.yml` and modify the cron expression.
 
 ## Notes
 
