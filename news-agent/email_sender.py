@@ -14,7 +14,7 @@ def is_valid_email(address: str | None) -> bool:
     return bool(address and EMAIL_PATTERN.match(address))
 
 
-def send_email(subject: str, body: str) -> None:
+def send_email(subject: str, body: str, is_html: bool = False) -> None:
     """Send an email through Gmail SMTP using an app password."""
     gmail_user = os.getenv("GMAIL_USER")
     gmail_app_password = os.getenv("GMAIL_APP_PASSWORD")
@@ -29,7 +29,7 @@ def send_email(subject: str, body: str) -> None:
     if not is_valid_email(to_email):
         raise ValueError("TO_EMAIL is not a valid email address")
 
-    message = MIMEText(body, "plain", "utf-8")
+    message = MIMEText(body, "html" if is_html else "plain", "utf-8")
     message["Subject"] = subject
     message["From"] = gmail_user
     message["To"] = to_email
