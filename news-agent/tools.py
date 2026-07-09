@@ -59,8 +59,11 @@ def summarize_article(article: dict) -> str:
         f"Description: {article.get('description', '')}\n"
         f"Link: {article.get('url', '')}"
     )
-    response = client.responses.create(model=model, input=prompt)
-    return response.output_text.strip()
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content.strip()
 
 
 def today_string() -> str:
